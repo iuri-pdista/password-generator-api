@@ -1,21 +1,25 @@
-// import PswdModel from '../Models/PswdModel';
+import PswdModel from '../Models/PswdModel';
+import PswdSpecifications from '../Models/PswdSpecifications';
 import { Request, Response } from 'express';
 
 export default class PswdController {
-    static async GeneratePassword (req: Request, res: Response) {
-        try {
-            const {
-                length,
-                specifications
-            } = req.body;
-            console.log(length, specifications);
-            if ( !length || specifications.length() == 0 ) {
-                return res.send("BAD REQUEST").status(404);
-            }
-            return req.body;
-        } 
-        catch (error) {
-            console.log(error);
+    static async RecieveSpecifications (req: Request, res: Response) {
+        const {
+            length,
+            specifications
+        } = req.body;
+        if ( !length || specifications.length == 0 ) {
+            return res.status(404).send("BAD REQUEST");
         }
+        return res.send(req.body);
     }
+
+    // static GeneratePassword (req: Request, res: Response) {
+    //     try {
+            
+    //     } 
+    //     catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 }
