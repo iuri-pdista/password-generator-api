@@ -11,18 +11,24 @@ export default class PswdController {
         if ( !length || specifications.length == 0 ) {
             return res.status(404).send("BAD REQUEST");
         }
-        const newPswd: PswdModel = this.ProcessSpecifications(length, specifications[0]);
+        const newPswd: PswdModel = PswdController.ProcessSpecifications(length, specifications[0]);
         return res.send(req.body);
     }
 
     static ProcessSpecifications(length: number, specifications: PswdSpecifications):PswdModel {
-        const {
-            numbers,
-            symbols
-        } = specifications;
-        console.log(length, numbers, symbols);
-        const newPswd: PswdModel = new PswdModel("", symbols, numbers, length);
-        return newPswd;
+        try {
+            const {
+                number,
+                symbols
+            } = specifications;
+            console.log(length, number, symbols);
+            const newPswd: PswdModel = new PswdModel("", symbols, number, length);
+            return newPswd;
+        } 
+        catch (error) {
+            console.log(error);
+            return (new PswdModel("", false, false, 0));
+        }
     }
 
     // static GeneratePassword (req: Request, res: Response) {

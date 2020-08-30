@@ -1,4 +1,4 @@
 export default interface PswdSpecifications {
-    numbers: boolean;
+    number: boolean;
     symbols: boolean;
 }
