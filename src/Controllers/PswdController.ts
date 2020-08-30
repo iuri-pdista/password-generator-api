@@ -12,6 +12,9 @@ export default class PswdController {
             return res.status(404).send("BAD REQUEST");
         }
         const newPswd: PswdModel = PswdController.ProcessSpecifications(length, specifications[0]);
+        if (newPswd.Length == 0){
+            return res.status(500).send("We're facing some troubles, please do have patience, and try again");
+        }
         return res.send(req.body);
     }
 
