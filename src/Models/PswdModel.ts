@@ -1,11 +1,11 @@
 export default class PswdModel {
-    constructor ( password: string, symbols: boolean, numbers: boolean,length: number ){
+    constructor ( password: string[], symbols: boolean, numbers: boolean,length: number ){
         this.passwordBody = password;
         this.Length = length;
         this.Symbols = symbols;
         this.Numbers = numbers;
     }
-    passwordBody: string;
+    passwordBody: string[];
     Length: number;
     Symbols: boolean;
     Numbers: boolean;
