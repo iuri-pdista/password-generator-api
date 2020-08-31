@@ -65,10 +65,11 @@ export default class PswdController {
                 return Math.floor(Math.random() * 10).toLocaleString();
             }
             else if ( rndNumber == 2 && symbols ){
-                return "&"            
+                let generatedSymbol = PswdController.GenerateSymbol();
+                return generatedSymbol;
             }
             else{
-                return "A"
+                return PswdController.GenerateChar();
             }
         } 
         catch (error) {
@@ -135,5 +136,31 @@ export default class PswdController {
                 return "I"
         }
     }
-    static GenerateSymbol () {}
+    static GenerateSymbol () {
+        let rndNumber = Math.floor(Math.random() * 10);
+        switch (rndNumber) {
+            case 0:
+                return "!"
+            case 1:
+                return "@"
+            case 2:
+                return "#"
+            case 3:
+                return "$"
+            case 4: 
+                return "%"
+            case 5:
+                return "^"
+            case 6:
+                return "&"
+            case 7:
+                return "*"
+            case 8:
+                return "("
+            case 9:
+                return ")"
+            default:
+                return "."
+        }
+    }
 }
