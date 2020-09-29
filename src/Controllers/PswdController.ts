@@ -22,22 +22,24 @@ export default class PswdController {
         try {
             const {
                 number,
-                symbols
+                symbols,
+                upperCase
             } = specifications;
             const newPswd: PswdModel = new PswdModel(
-                    PswdController.GeneratePassword(length, number, symbols), 
+                    PswdController.GeneratePassword(length, number, symbols, upperCase), 
                     symbols, 
                     number, 
-                    length);
+                    length,
+                    upperCase);
             return newPswd;
         } 
         catch (error) {
             console.log(error);
-            return (new PswdModel([], false, false, 0));
+            return (new PswdModel([], false, false, 0, false));
         }
     }
 
-    static GeneratePassword ( length: number, number: boolean, symbols: boolean ): string[]{
+    static GeneratePassword ( length: number, number: boolean, symbols: boolean, upperCase: boolean ): string[]{
         try {
             const password: string[] = [];
             let i = 0;
@@ -46,6 +48,10 @@ export default class PswdController {
                 password[i] = PswdController.NextCharDecision(number, symbols, rndNumber)
                 console.log(password[i], length, i, rndNumber);
                 i += 1;
+            }
+            if ( upperCase ){ 
+                const UpperCasePassword: string[] = PswdController.AddUpperCase( password );
+                return UpperCasePassword;
             }
             return password;
         } 
@@ -77,6 +83,17 @@ export default class PswdController {
             return "A"           
         }
     } 
+
+    static AddUpperCase ( password: string[] ): string[] {
+        let concatString = (password.toString()).toUpperCase();
+        const concatStringInArray: string[] = [];
+        for ( let char of concatString ) {
+            concatStringInArray.push( char.toString());
+        }
+        console.log(concatStringInArray);
+        return concatStringInArray;
+    }
+
     static GenerateChar () {
         let rnd = Math.floor(Math.random() * 27);
         switch(rnd){
