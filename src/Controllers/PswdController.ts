@@ -85,12 +85,12 @@ export default class PswdController {
     } 
 
     static AddUpperCase ( password: string[] ): string[] {
-        let concatString = password.toString();
-        concatString.toUpperCase();
+        let concatString = (password.toString()).toUpperCase();
         const concatStringInArray: string[] = [];
         for ( let char of concatString ) {
             concatStringInArray.push( char.toString());
         }
+        console.log(concatStringInArray);
         return concatStringInArray;
     }
 
