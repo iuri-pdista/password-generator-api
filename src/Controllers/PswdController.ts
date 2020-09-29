@@ -1,7 +1,6 @@
 import PswdModel from '../Models/PswdModel';
 import PswdSpecifications from '../Models/PswdSpecifications';
 import { Request, Response } from 'express';
-import { isNumeric } from 'tslint';
 
 export default class PswdController {
     static async RecieveSpecifications (req: Request, res: Response) {
@@ -27,7 +26,7 @@ export default class PswdController {
                 upperCase
             } = specifications;
             const newPswd: PswdModel = new PswdModel(
-                    PswdController.GeneratePassword(length, number, symbols), 
+                    PswdController.GeneratePassword(length, number, symbols, upperCase), 
                     symbols, 
                     number, 
                     length,
@@ -40,7 +39,7 @@ export default class PswdController {
         }
     }
 
-    static GeneratePassword ( length: number, number: boolean, symbols: boolean ): string[]{
+    static GeneratePassword ( length: number, number: boolean, symbols: boolean, upperCase: boolean ): string[]{
         try {
             const password: string[] = [];
             let i = 0;
@@ -49,6 +48,10 @@ export default class PswdController {
                 password[i] = PswdController.NextCharDecision(number, symbols, rndNumber)
                 console.log(password[i], length, i, rndNumber);
                 i += 1;
+            }
+            if ( upperCase ){ 
+                const UpperCasePassword: string[] = PswdController.AddUpperCase( password );
+                return UpperCasePassword;
             }
             return password;
         } 
@@ -81,12 +84,14 @@ export default class PswdController {
         }
     } 
 
-    static AddUpperCase ( password: string[] ) {
-        password.map( (element) => {
-            if ( (/[a-zA-Z]/).test(element) ) {
-                element.toUpperCase();
-            }
-        });
+    static AddUpperCase ( password: string[] ): string[] {
+        let concatString = password.toString();
+        concatString.toUpperCase();
+        const concatStringInArray: string[] = [];
+        for ( let char of concatString ) {
+            concatStringInArray.push( char.toString());
+        }
+        return concatStringInArray;
     }
 
     static GenerateChar () {
