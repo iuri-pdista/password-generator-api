@@ -1,6 +1,7 @@
 import PswdModel from '../Models/PswdModel';
 import PswdSpecifications from '../Models/PswdSpecifications';
 import { Request, Response } from 'express';
+import { isNumeric } from 'tslint';
 
 export default class PswdController {
     static async RecieveSpecifications (req: Request, res: Response) {
@@ -22,18 +23,20 @@ export default class PswdController {
         try {
             const {
                 number,
-                symbols
+                symbols,
+                upperCase
             } = specifications;
             const newPswd: PswdModel = new PswdModel(
                     PswdController.GeneratePassword(length, number, symbols), 
                     symbols, 
                     number, 
-                    length);
+                    length,
+                    upperCase);
             return newPswd;
         } 
         catch (error) {
             console.log(error);
-            return (new PswdModel([], false, false, 0));
+            return (new PswdModel([], false, false, 0, false));
         }
     }
 
@@ -77,6 +80,15 @@ export default class PswdController {
             return "A"           
         }
     } 
+
+    static AddUpperCase ( password: string[] ) {
+        password.map( (element) => {
+            if ( (/[a-zA-Z]/).test(element) ) {
+                element.toUpperCase();
+            }
+        });
+    }
+
     static GenerateChar () {
         let rnd = Math.floor(Math.random() * 27);
         switch(rnd){
